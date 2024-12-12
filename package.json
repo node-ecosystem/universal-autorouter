@@ -1,0 +1,56 @@
+{
+  "name": "universal-autoloader",
+  "version": "0.1.0",
+  "license": "MIT",
+  "type": "module",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    "import": "./dist/index.mjs",
+    "types": "./dist/index.d.mts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rtritto/universal-autoloader.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "tsx ./start.ts",
+    "lint": "eslint src/**/*.ts",
+    "test": "tsx ./test/index.test.ts",
+    "build": "pkgroll",
+    "prepublishOnly": "yarn build",
+    "od": "yarn outdated"
+  },
+  "devDependencies": {
+    "@hono/node-server": "^1.13.7",
+    "@types/bun": "^1.1.14",
+    "@types/node": "^22.10.2",
+    "@yarnpkg/sdks": "^3.2.0",
+    "eslint": "^9.16.0",
+    "eslint-plugin-unicorn": "^56.0.1",
+    "hono": "^4.6.13",
+    "pkgroll": "^2.5.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.0",
+    "vite": "^5.4.11"
+  },
+  "keywords": [
+    "autoload",
+    "cross-platform",
+    "directory",
+    "fast",
+    "filesystem",
+    "http",
+    "http-server",
+    "lightweight",
+    "microws",
+    "middleware",
+    "plugin",
+    "router",
+    "proxy-protocol"
+  ]
+}
