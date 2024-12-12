@@ -1,6 +1,6 @@
 # universal-autoloader
 
-Universal plugin to load   that autoloads all routes in a directory.
+Universal plugin, that use the _file system_ scan, to load in a server all routes in a directory.
 
 Inspired by [elysia-autoload](https://github.com/kravetsone/elysia-autoload).
 
