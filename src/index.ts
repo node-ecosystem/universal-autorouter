@@ -3,8 +3,8 @@ import { pathToFileURL } from 'node:url'
 
 import { sortRoutesByParams, transformToRoute } from './utils'
 
-const DEFAULT_ROUTES_DIR = './routes'
 const DEFAULT_PATTERN = '**/*.{ts,tsx,mjs,js,jsx,cjs}'
+const DEFAULT_ROUTES_DIR = './routes'
 const DEFAULT_METHOD = 'get'
 
 type Method = 'get' | 'post' | 'put' | 'delete' | 'options' | 'patch' | 'all'
