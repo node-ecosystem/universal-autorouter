@@ -5,6 +5,7 @@ import { sortRoutesByParams, transformToRoute } from './utils'
 
 const DEFAULT_ROUTES_DIR = './routes'
 const DEFAULT_PATTERN = '**/*.{ts,tsx,mjs,js,jsx,cjs}'
+const DEFAULT_METHOD = 'get'
 
 type Method = 'get' | 'post' | 'put' | 'delete' | 'options' | 'patch' | 'all'
 
@@ -41,6 +42,11 @@ type AutoloadRoutesOptions = {
    */
   routesDir?: string
   /**
+   * Default method to use when the route filename doesn't use the (<METHOD>) pattern
+   * @default 'get'
+   */
+  defaultMethod?: Method | string
+  /**
    * Vite dev server instance
    * @default undefined
    */
@@ -61,6 +67,7 @@ export const autoloadRoutes = async (app: App, {
   pattern = DEFAULT_PATTERN,
   prefix = '',
   routesDir = DEFAULT_ROUTES_DIR,
+  defaultMethod = DEFAULT_METHOD,
   viteDevServer,
   skipNoRoutes = false,
   skipImportErrors = false
@@ -94,7 +101,7 @@ export const autoloadRoutes = async (app: App, {
 
     if (typeof importedRoute === 'function') {
       const matchedFile = universalFile.match(/\/?\((.*?)\)/)
-      const method = matchedFile ? matchedFile[1] as Method : 'get'
+      const method = matchedFile ? matchedFile[1] as Method : defaultMethod
       const route = `${prefix}/${transformToRoute(universalFile)}`
       app[method](route, importedRoute)
     } else {

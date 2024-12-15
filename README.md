@@ -88,14 +88,15 @@ Guide on how `universal-autoloader` matches routes:
 
 ### Options
 
-| Key               | Type          | Default                        | Description                                                                    |
-| ----------------- | ------------- | ------------------------------ | ------------------------------------------------------------------------------ |
-| pattern?          | string        | `**/*.{ts,tsx,js,jsx,mjs,cjs}` | [Glob patterns](https://en.wikipedia.org/wiki/Glob_(programming))              |
-| prefix?           | string        | ` `                            | Prefix to be added to each route                                               |
-| routesDir?        | string        | `./routes`                     | The folder where routes are located (use a *relative* path)                    |
-| viteDevServer?    | ViteDevServer | _undefined_                    | Developer server instance of [Vite](https://vite.dev) to use SSR module loader |
-| skipNoRoutes?     | boolean       | `false`                        | Skip the throw error when no routes are found                                  |
-| skipImportErrors? | boolean       | `false`                        | Skip the import errors with the `default export` of a rotue file               |
+| Key               | Type            | Default                        | Description                                                                      |
+| ----------------- | --------------- | ------------------------------ | -------------------------------------------------------------------------------- |
+| pattern?          | string          | `**/*.{ts,tsx,js,jsx,mjs,cjs}` | [Glob patterns](https://en.wikipedia.org/wiki/Glob_(programming))                |
+| prefix?           | string          | ` `                            | Prefix to be added to each route                                                 |
+| routesDir?        | string          | `./routes`                     | The folder where routes are located (use a *relative* path)                      |
+| defaultMethod?    | Method | string | `get`                          | Default method to use when the route filename doesn't use the (<METHOD>) pattern |
+| viteDevServer?    | ViteDevServer   | _undefined_                    | Developer server instance of [Vite](https://vite.dev) to use SSR module loader   |
+| skipNoRoutes?     | boolean         | `false`                        | Skip the throw error when no routes are found                                    |
+| skipImportErrors? | boolean         | `false`                        | Skip the import errors with the `default export` of a rotue file                 |
 
 ## License
 
