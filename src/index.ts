@@ -88,8 +88,8 @@ export const autoloadRoutes = async (app: App, {
 
   for (const file of sortRoutesByParams(files)) {
     // Fix windows slashes
-    const universalFile = file.replaceAll('\\', '/')
-    const initFilepath = `${routesDir}/${universalFile}`
+    const universalFilepath = file.replaceAll('\\', '/')
+    const initFilepath = `${routesDir}/${universalFilepath}`
     const { default: importedRoute } = await (viteDevServer
       ? viteDevServer.ssrLoadModule(initFilepath, { fixStacktrace: true })
       // fix ERR_UNSUPPORTED_ESM_URL_SCHEME on Windows
@@ -100,9 +100,9 @@ export const autoloadRoutes = async (app: App, {
     }
 
     if (typeof importedRoute === 'function') {
-      const matchedFile = universalFile.match(/\/?\((.*?)\)/)
+      const matchedFile = universalFilepath.match(/\/?\((.*?)\)/)
       const method = matchedFile ? matchedFile[1] as Method : defaultMethod
-      const route = `${prefix}/${transformToRoute(universalFile)}`
+      const route = `${prefix}/${transformToRoute(universalFilepath)}`
       app[method](route, importedRoute)
     } else {
       console.warn(`Exported function of ${initFilepath} is not a function`)
