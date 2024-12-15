@@ -44,7 +44,7 @@ type AutoloadRoutesOptions = {
    * Vite dev server instance
    * @default undefined
    */
-  vite?: ViteDevServer
+  viteDevServer?: ViteDevServer
   /**
    * Skip the throw error when no routes are found
    * @default false
@@ -61,7 +61,7 @@ export const autoloadRoutes = async (app: App, {
   pattern = DEFAULT_PATTERN,
   prefix = '',
   routesDir = DEFAULT_ROUTES_DIR,
-  vite,
+  viteDevServer,
   skipNoRoutes = false,
   skipImportErrors = false
 }: AutoloadRoutesOptions) => {
@@ -84,8 +84,8 @@ export const autoloadRoutes = async (app: App, {
   for (const file of sortRoutesByParams(files)) {
     const universalFile = file.replaceAll('\\', '/')
     const filePath = pathToFileURL(`${routesDir}/${universalFile}`).href
-    const { default: importedRoute } = await (vite
-      ? vite.ssrLoadModule(filePath, { fixStacktrace: true })
+    const { default: importedRoute } = await (viteDevServer
+      ? viteDevServer.ssrLoadModule(filePath, { fixStacktrace: true })
       : import(filePath))
 
     if (!importedRoute && !skipImportErrors) {
