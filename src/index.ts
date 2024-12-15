@@ -1,7 +1,7 @@
 import fs from 'node:fs'
-import { pathToFileURL } from 'node:url'
 
 import { sortRoutesByParams, transformToRoute } from './utils'
+import { pathToFileURL } from 'node:url'
 
 const DEFAULT_PATTERN = '**/*.{ts,tsx,mjs,js,jsx,cjs}'
 const DEFAULT_ROUTES_DIR = './routes'
@@ -87,14 +87,16 @@ export const autoloadRoutes = async (app: App, {
   }
 
   for (const file of sortRoutesByParams(files)) {
+    // Fix windows slashes
     const universalFile = file.replaceAll('\\', '/')
-    const filePath = pathToFileURL(`${routesDir}/${universalFile}`).href
+    const initFilepath = `${routesDir}/${universalFile}`
     const { default: importedRoute } = await (viteDevServer
-      ? viteDevServer.ssrLoadModule(filePath, { fixStacktrace: true })
-      : import(filePath))
+      ? viteDevServer.ssrLoadModule(initFilepath, { fixStacktrace: true })
+      // fix ERR_UNSUPPORTED_ESM_URL_SCHEME on Windows
+      : import(pathToFileURL(initFilepath).href))
 
     if (!importedRoute && !skipImportErrors) {
-      throw new Error(`${filePath} doesn't have default export (you can disable this error with 'skipImportErrors' option to true)`)
+      throw new Error(`${initFilepath} doesn't have default export (you can disable this error with 'skipImportErrors' option to true)`)
     }
 
     if (typeof importedRoute === 'function') {
@@ -103,7 +105,7 @@ export const autoloadRoutes = async (app: App, {
       const route = `${prefix}/${transformToRoute(universalFile)}`
       app[method](route, importedRoute)
     } else {
-      console.warn(`Exported function of ${filePath} is not a function`)
+      console.warn(`Exported function of ${initFilepath} is not a function`)
     }
   }
 
