@@ -9,9 +9,7 @@ const DEFAULT_METHOD = 'get'
 
 type Method = 'get' | 'post' | 'put' | 'delete' | 'options' | 'patch' | 'all'
 
-type App = {
-  [method in Method]: (route: string, handler: (req: any, res: any) => void) => void
-}
+type App = Record<Method | string, ((route: string, handler: (req: unknown, res: unknown) => void) => void) | any>
 
 type ViteDevServer = {
   ssrLoadModule: (url: string, opts?: { fixStacktrace?: boolean }) => Promise<Record<string, any>>
