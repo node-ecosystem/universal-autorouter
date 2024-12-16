@@ -77,15 +77,15 @@ Guide on how `universal-autoloader` matches routes:
 └── package.json
 ```
 
-- `/routes/index.ts` → `GET` `/`
-- `/routes/posts/index.ts` → `GET` `/posts`
-- `/routes/posts/[id].ts` → `GET` `/posts/:id`
-- `/routes/users.ts` → `GET` `/users`
-- `/routes/likes/[...].ts` → `GET` `/likes/*`
-- `/routes/domains/@[...]/index.ts` → `GET` `/domains/@*`
-- `/routes/frontend/index.tsx` → `GET` `/frontend`
-- `/routes/events/(post).ts` → `POST` `/events`
-- `/routes/events/(get).ts` → `GET` `/events`
+- `/routes/index.ts` → GET `/`
+- `/routes/posts/index.ts` → GET `/posts`
+- `/routes/posts/[id].ts` → GET `/posts/:id`
+- `/routes/users.ts` → GET `/users`
+- `/routes/likes/[...].ts` → GET `/likes/*`
+- `/routes/domains/@[...]/index.ts` → GET `/domains/@*`
+- `/routes/frontend/index.tsx` → GET `/frontend`
+- `/routes/events/(post).ts` → POST `/events`
+- `/routes/events/(get).ts` → GET `/events`
 
 ### Options
 
