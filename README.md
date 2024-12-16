@@ -16,6 +16,7 @@ yarn add universal-autoloader
 
 ```ts
 // /app.ts
+import path from 'node:path'
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import { autoloadRoutes } from 'universal-autoloader'
@@ -28,7 +29,7 @@ const app = await autoloadRoutes(new Hono(), {
   // Prefix to add to routes
   prefix: '/api',
   // Source directory of route files: use "relative" path
-  routesDir: './src/api'
+  routesDir: path.resolve(import.meta.dirname, 'api')
 })
 
 serve(

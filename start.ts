@@ -1,3 +1,4 @@
+import path from 'node:path'
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import { logger } from 'hono/logger'
@@ -13,7 +14,7 @@ autoloadRoutes(
   {
     pattern: '**/*.ts',
     // prefix: '/api',
-    routesDir: './test/routes'
+    routesDir: path.resolve(import.meta.dirname, 'test/routes')
   }
 )
 
