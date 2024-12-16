@@ -92,7 +92,7 @@ export const autoloadRoutes = async (app: App, {
     const initFilepath = `${routesDir}/${universalFilepath}`
     const { default: importedRoute } = await (viteDevServer
       ? viteDevServer.ssrLoadModule(initFilepath, { fixStacktrace: true })
-      // fix ERR_UNSUPPORTED_ESM_URL_SCHEME on Windows
+      // fix ERR_UNSUPPORTED_ESM_URL_SCHEME import error on Windows
       : import(pathToFileURL(initFilepath).href))
 
     if (!importedRoute && !skipImportErrors) {
