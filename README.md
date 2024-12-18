@@ -1,4 +1,4 @@
-# universal-autoloader
+# universal-autorouter
 
 Universal plugin, that use the _file system_ scan, to load in a server all routes in a directory.
 
@@ -7,7 +7,7 @@ Inspired by [elysia-autoload](https://github.com/kravetsone/elysia-autoload).
 ## Installation
 
 ```sh
-yarn add universal-autoloader
+yarn add universal-autorouter
 ```
 
 ## Usage example with [Hono](https://hono.dev)
@@ -19,7 +19,7 @@ yarn add universal-autoloader
 import path from 'node:path'
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
-import { autoloadRoutes } from 'universal-autoloader'
+import { autoloadRoutes } from 'universal-autorouter'
 
 const port = +(process.env.PORT || 3000)
 
@@ -54,7 +54,7 @@ export default (c: Context) => {
 
 ### Directory Structure
 
-Guide on how `universal-autoloader` matches routes:
+Guide on how `universal-autorouter` matches routes:
 
 ```
 ├── app.ts

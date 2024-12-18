@@ -1,5 +1,5 @@
 {
-  "name": "universal-autoloader",
+  "name": "universal-autorouter",
   "version": "0.1.2",
   "license": "MIT",
   "type": "module",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/node-ecosystem/universal-autoloader.git"
+    "url": "git+https://github.com/node-ecosystem/universal-autorouter.git"
   },
   "files": [
     "dist"
