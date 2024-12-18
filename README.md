@@ -19,7 +19,7 @@ yarn add universal-autorouter
 import path from 'node:path'
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
-import { autoloadRoutes } from 'universal-autorouter'
+import autoloadRoutes from 'universal-autorouter'
 
 const port = +(process.env.PORT || 3000)
 

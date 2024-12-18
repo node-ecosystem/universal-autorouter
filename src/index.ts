@@ -61,7 +61,7 @@ type AutoloadRoutesOptions = {
   skipImportErrors?: boolean
 }
 
-export const autoloadRoutes = async (app: App, {
+export default async (app: App, {
   pattern = DEFAULT_PATTERN,
   prefix = '',
   routesDir = DEFAULT_ROUTES_DIR,

@@ -3,7 +3,7 @@ import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import { logger } from 'hono/logger'
 
-import { autoloadRoutes } from './src/index'
+import autoloadRoutes from './src/index'
 
 const port = +(process.env.PORT || 3000)
 
