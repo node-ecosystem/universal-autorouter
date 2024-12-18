@@ -9,7 +9,7 @@ const DEFAULT_METHOD = 'get'
 
 type Method = 'get' | 'post' | 'put' | 'delete' | 'options' | 'patch' | 'all'
 
-type App = Record<Method | string, ((route: string, handler: (req: unknown, res: unknown) => void) => void) | any>
+type App<T> = Record<Method | string, ((route: string, handler: (req: unknown, res: unknown) => void) => void) | any> & T
 
 type ViteDevServer = {
   ssrLoadModule: (url: string, opts?: { fixStacktrace?: boolean }) => Promise<Record<string, any>>
@@ -61,7 +61,7 @@ type AutoloadRoutesOptions = {
   skipImportErrors?: boolean
 }
 
-export default async (app: App, {
+export default async <T>(app: App<T>, {
   pattern = DEFAULT_PATTERN,
   prefix = '',
   routesDir = DEFAULT_ROUTES_DIR,
@@ -69,7 +69,7 @@ export default async (app: App, {
   viteDevServer,
   skipNoRoutes = false,
   skipImportErrors = false
-}: AutoloadRoutesOptions) => {
+}: AutoloadRoutesOptions): Promise<App<T>> => {
   if (!fs.existsSync(routesDir)) {
     throw new Error(`Directory ${routesDir} doesn't exist`)
   }
