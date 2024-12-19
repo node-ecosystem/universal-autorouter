@@ -2,7 +2,7 @@
 
 Universal plugin, that use the _file system_ scan, to load in a server all routes in a directory.
 
-Inspired by [elysia-autoload](https://github.com/kravetsone/elysia-autoload).
+Inspired by [elysia-autoload](https://github.com/kravetsone/elysia-autoload) and compatibles with [Node.js](https://nodejs.org) and [Bun](https://bun.sh) runtimes.
 
 ## Installation
 
