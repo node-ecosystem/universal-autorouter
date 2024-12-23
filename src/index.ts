@@ -1,4 +1,5 @@
 import fs from 'node:fs'
+import path from 'node:path'
 
 import { sortRoutesByParams, transformToRoute } from './utils'
 import { pathToFileURL } from 'node:url'
@@ -70,26 +71,27 @@ export default async <T>(app: App<T>, {
   skipNoRoutes = false,
   skipImportErrors = false
 }: AutoloadRoutesOptions): Promise<App<T>> => {
-  if (!fs.existsSync(routesDir)) {
-    throw new Error(`Directory ${routesDir} doesn't exist`)
+  const entryDir = path.isAbsolute(routesDir) ? routesDir : path.resolve(process.cwd(), routesDir)
+  if (!fs.existsSync(entryDir)) {
+    throw new Error(`Directory ${entryDir} doesn't exist`)
   }
 
-  if (!fs.statSync(routesDir).isDirectory()) {
-    throw new Error(`${routesDir} isn't a directory`)
+  if (!fs.statSync(entryDir).isDirectory()) {
+    throw new Error(`${entryDir} isn't a directory`)
   }
 
   const files = typeof Bun === 'undefined'
-    ? fs.globSync(pattern, { cwd: routesDir })
-    : await Array.fromAsync((new Bun.Glob(pattern)).scan({ cwd: routesDir }))
+    ? fs.globSync(pattern, { cwd: entryDir })
+    : await Array.fromAsync((new Bun.Glob(pattern)).scan({ cwd: entryDir }))
 
   if (files.length === 0 && !skipNoRoutes) {
-    throw new Error(`No matches found in ${routesDir} (you can disable this error with 'skipFailGlob' option to true)`)
+    throw new Error(`No matches found in ${entryDir} (you can disable this error with 'skipFailGlob' option to true)`)
   }
 
   for (const file of sortRoutesByParams(files)) {
     // Fix windows slashes
     const universalFilepath = file.replaceAll('\\', '/')
-    const initFilepath = `${routesDir}/${universalFilepath}`
+    const initFilepath = `${entryDir}/${universalFilepath}`
     const { default: importedRoute } = await (viteDevServer
       ? viteDevServer.ssrLoadModule(initFilepath, { fixStacktrace: true })
       // fix ERR_UNSUPPORTED_ESM_URL_SCHEME import error on Windows
