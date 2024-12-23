@@ -1,18 +1,18 @@
 # universal-autorouter
 
-Universal plugin, that use the _file system_ scan, to load in a server all routes in a directory.
+An universal plugin that scans the file system and automatically loads to a server all routes in a target directory.
 
-Inspired by [elysia-autoload](https://github.com/kravetsone/elysia-autoload) and compatibles with [Node.js](https://nodejs.org) and [Bun](https://bun.sh) runtimes.
+Inspired by [elysia-autoload](https://github.com/kravetsone/elysia-autoload) package and compatible with [Node.js](https://nodejs.org) and [Bun](https://bun.sh) runtimes.
 
-## Installation
+## ⚙️ Install
 
 ```sh
 yarn add universal-autorouter
 ```
 
-## Usage example with [Hono](https://hono.dev)
+## 📖 Usage
 
-### Register the Plugin
+### Register the Plugin (example with [Hono](https://hono.dev))
 
 ```ts
 // /app.ts
@@ -20,8 +20,6 @@ import path from 'node:path'
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import autoloadRoutes from 'universal-autorouter'
-
-const port = +(process.env.PORT || 3000)
 
 const app = await autoloadRoutes(new Hono(), {
   // Pattern to scan route files
@@ -32,13 +30,12 @@ const app = await autoloadRoutes(new Hono(), {
   routesDir: path.resolve(import.meta.dirname, 'api')
 })
 
-serve(
-  {
-    fetch: app.fetch,
-    port
-  },
-  () => console.log(`Server running at http://localhost:${port}`)
-)
+const port = +(process.env.PORT || 3000)
+
+serve({
+  fetch: app.fetch,
+  port
+}, () => console.log(`Server running at http://localhost:${port}`))
 ```
 
 ### Create a Route
