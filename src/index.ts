@@ -10,7 +10,7 @@ const DEFAULT_METHOD = 'get'
 
 type Method = 'get' | 'post' | 'put' | 'delete' | 'options' | 'patch' | 'all'
 
-export type App<T> = Record<Method | string, ((route: string, handler: (req: unknown, res: unknown) => void) => void) | any> & T
+type App<T> = Record<Method | string, ((route: string, handler: (req: unknown, res: unknown) => void) => void) | any> & T
 
 type ViteDevServer = {
   ssrLoadModule: (url: string, opts?: { fixStacktrace?: boolean }) => Promise<Record<string, any>>
