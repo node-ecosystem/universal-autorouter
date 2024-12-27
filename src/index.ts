@@ -90,24 +90,24 @@ export default async <T>(app: App<T>, {
 
   for (const file of sortRoutesByParams(files)) {
     // Fix windows slashes
-    const universalFilepath = file.replaceAll('\\', '/')
-    const initFilepath = `${entryDir}/${universalFilepath}`
+    const endFilepath = file.replaceAll('\\', '/')
+    const fullFilepath = `${entryDir}/${endFilepath}`
     const { default: importedRoute } = await (viteDevServer
-      ? viteDevServer.ssrLoadModule(initFilepath, { fixStacktrace: true })
+      ? viteDevServer.ssrLoadModule(fullFilepath, { fixStacktrace: true })
       // fix ERR_UNSUPPORTED_ESM_URL_SCHEME import error on Windows
-      : import(pathToFileURL(initFilepath).href))
+      : import(pathToFileURL(fullFilepath).href))
 
     if (!importedRoute && !skipImportErrors) {
-      throw new Error(`${initFilepath} doesn't have default export (you can disable this error with 'skipImportErrors' option to true)`)
+      throw new Error(`${fullFilepath} doesn't have default export (you can disable this error with 'skipImportErrors' option to true)`)
     }
 
     if (typeof importedRoute === 'function') {
-      const matchedFile = universalFilepath.match(/\/?\((.*?)\)/)
+      const matchedFile = endFilepath.match(/\/?\((.*?)\)/)
       const method = matchedFile ? matchedFile[1] as Method : defaultMethod
-      const route = `${prefix}/${transformToRoute(universalFilepath)}`
+      const route = `${prefix}/${transformToRoute(endFilepath)}`
       app[method](route, importedRoute)
     } else {
-      console.warn(`Exported function of ${initFilepath} is not a function`)
+      console.warn(`Exported function of ${fullFilepath} is not a function`)
     }
   }
 
