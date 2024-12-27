@@ -32,11 +32,11 @@
     "eslint": "^9.17.0",
     "eslint-plugin-unicorn": "^56.0.1",
     "hono": "^4.6.14",
-    "pkgroll": "^2.5.1",
+    "pkgroll": "2.5.1",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
-    "typescript-eslint": "^8.18.1",
-    "vite": "^6.0.5"
+    "typescript-eslint": "^8.18.2",
+    "vite": "^6.0.6"
   },
   "keywords": [
     "autoload",
