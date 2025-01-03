@@ -9,7 +9,7 @@ const port = +(process.env.PORT || 3000)
 const app = await autoloadRoutes(new Hono(), {
   pattern: '**/*.ts',
   // prefix: '/api',
-  routesDir: './test/routes'
+  routesDir: 'test/routes'
 })
 
 app.use(logger())
