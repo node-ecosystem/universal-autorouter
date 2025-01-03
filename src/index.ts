@@ -82,7 +82,7 @@ export default async <T>(app: App<T>, {
 
   const files = typeof Bun === 'undefined'
     ? fs.globSync(pattern, { cwd: entryDir })
-    : await Array.fromAsync((new Bun.Glob(pattern)).scan({ cwd: entryDir }))
+    : [...(new Bun.Glob(pattern)).scanSync({ cwd: entryDir })]
 
   if (files.length === 0 && !skipNoRoutes) {
     throw new Error(`No matches found in ${entryDir} (you can disable this error with 'skipFailGlob' option to true)`)
