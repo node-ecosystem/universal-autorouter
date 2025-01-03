@@ -4,8 +4,6 @@ import { logger } from 'hono/logger'
 
 import autoloadRoutes from './src/index'
 
-const port = +(process.env.PORT || 3000)
-
 const app = await autoloadRoutes(new Hono(), {
   pattern: '**/*.ts',
   // prefix: '/api',
@@ -13,6 +11,8 @@ const app = await autoloadRoutes(new Hono(), {
 })
 
 app.use(logger())
+
+const port = +(process.env.PORT || 3000)
 
 serve({
   fetch: app.fetch,
