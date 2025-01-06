@@ -88,14 +88,16 @@ export default async <T>(app: App<T>, {
     throw new Error(`No matches found in ${entryDir} (you can disable this error with 'skipFailGlob' option to true)`)
   }
 
+  const _import = viteDevServer
+    ? (filepath: string) => viteDevServer.ssrLoadModule(filepath, { fixStacktrace: true })
+    // fix ERR_UNSUPPORTED_ESM_URL_SCHEME import error on Windows
+    : (filepath: string) => import(pathToFileURL(filepath).href)
+
   for (const file of sortRoutesByParams(files)) {
     // Fix windows slashes
     const endFilepath = file.replaceAll('\\', '/')
     const fullFilepath = `${entryDir}/${endFilepath}`
-    const { default: importedRoute } = await (viteDevServer
-      ? viteDevServer.ssrLoadModule(fullFilepath, { fixStacktrace: true })
-      // fix ERR_UNSUPPORTED_ESM_URL_SCHEME import error on Windows
-      : import(pathToFileURL(fullFilepath).href))
+    const { default: importedRoute } = await _import(fullFilepath)
 
     if (!importedRoute && !skipImportErrors) {
       throw new Error(`${fullFilepath} doesn't have default export (you can disable this error with 'skipImportErrors' option to true)`)
