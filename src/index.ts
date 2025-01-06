@@ -71,7 +71,7 @@ export default async <T>(app: App<T>, {
   skipNoRoutes = false,
   skipImportErrors = false
 }: AutoloadRoutesOptions): Promise<App<T>> => {
-  const entryDir = path.isAbsolute(routesDir) ? routesDir : path.resolve(process.cwd(), routesDir)
+  const entryDir = path.isAbsolute(routesDir) ? routesDir : path.posix.join(process.cwd(), routesDir)
   if (!fs.existsSync(entryDir)) {
     throw new Error(`Directory ${entryDir} doesn't exist`)
   }
