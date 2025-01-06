@@ -1,8 +1,6 @@
 import fs from 'node:fs'
-import path from 'node:path'
 
 import { sortRoutesByParams, transformToRoute } from './utils'
-import { pathToFileURL } from 'node:url'
 
 const DEFAULT_PATTERN = '**/*.{ts,tsx,mjs,js,jsx,cjs}'
 const DEFAULT_ROUTES_DIR = './routes'
@@ -71,7 +69,7 @@ export default async <T>(app: App<T>, {
   skipNoRoutes = false,
   skipImportErrors = false
 }: AutoloadRoutesOptions): Promise<App<T>> => {
-  const entryDir = path.isAbsolute(routesDir) ? routesDir : path.resolve(process.cwd(), routesDir)
+  const entryDir = routesDir.replaceAll('\\', '/')
   if (!fs.existsSync(entryDir)) {
     throw new Error(`Directory ${entryDir} doesn't exist`)
   }
@@ -80,9 +78,10 @@ export default async <T>(app: App<T>, {
     throw new Error(`${entryDir} isn't a directory`)
   }
 
-  const files = typeof Bun === 'undefined'
+  const files = (typeof Bun === 'undefined'
     ? fs.globSync(pattern, { cwd: entryDir })
-    : [...(new Bun.Glob(pattern)).scanSync({ cwd: entryDir })]
+    : [...(new Bun.Glob(pattern)).scanSync({ cwd: entryDir })])
+    .map((file: string) => file.replace(/.ts$/, '').replaceAll('\\', '/'))
 
   if (files.length === 0 && !skipNoRoutes) {
     throw new Error(`No matches found in ${entryDir} (you can disable this error with 'skipFailGlob' option to true)`)
@@ -90,24 +89,23 @@ export default async <T>(app: App<T>, {
 
   for (const file of sortRoutesByParams(files)) {
     // Fix windows slashes
-    const endFilepath = file.replaceAll('\\', '/')
-    const fullFilepath = `${entryDir}/${endFilepath}`
+    const filepath = `../${entryDir}/${file}`
     const { default: importedRoute } = await (viteDevServer
-      ? viteDevServer.ssrLoadModule(fullFilepath, { fixStacktrace: true })
+      ? viteDevServer.ssrLoadModule(filepath, { fixStacktrace: true })
       // fix ERR_UNSUPPORTED_ESM_URL_SCHEME import error on Windows
-      : import(pathToFileURL(fullFilepath).href))
+      : import(`../${entryDir}/${file}.ts`))
 
     if (!importedRoute && !skipImportErrors) {
-      throw new Error(`${fullFilepath} doesn't have default export (you can disable this error with 'skipImportErrors' option to true)`)
+      throw new Error(`${filepath} doesn't have default export (you can disable this error with 'skipImportErrors' option to true)`)
     }
 
     if (typeof importedRoute === 'function') {
-      const matchedFile = endFilepath.match(/\/?\((.*?)\)/)
+      const matchedFile = file.match(/\/?\((.*?)\)/)
       const method = matchedFile ? matchedFile[1] as Method : defaultMethod
-      const route = `${prefix}/${transformToRoute(endFilepath)}`
+      const route = `${prefix}/${transformToRoute(file)}`
       app[method](route, importedRoute)
     } else {
-      console.warn(`Exported function of ${fullFilepath} is not a function`)
+      console.warn(`Exported function of ${filepath} is not a function`)
     }
   }
 
