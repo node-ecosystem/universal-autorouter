@@ -27,16 +27,16 @@
   "devDependencies": {
     "@hono/node-server": "^1.13.7",
     "@types/bun": "^1.1.14",
-    "@types/node": "^22.10.2",
+    "@types/node": "^22.10.5",
     "@yarnpkg/sdks": "^3.2.0",
     "eslint": "^9.17.0",
     "eslint-plugin-unicorn": "^56.0.1",
-    "hono": "^4.6.14",
+    "hono": "^4.6.16",
     "pkgroll": "2.5.1",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
-    "typescript-eslint": "^8.18.2",
-    "vite": "^6.0.6"
+    "typescript-eslint": "^8.19.1",
+    "vite": "^6.0.7"
   },
   "engines": {
     "node": ">=22"
