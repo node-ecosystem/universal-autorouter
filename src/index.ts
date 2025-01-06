@@ -94,7 +94,7 @@ export default async <T>(app: App<T>, {
     : (filepath: string) => import(pathToFileURL(filepath).href)
 
   for (const file of sortRoutesByParams(files)) {
-    // Fix windows slashes
+    // Fix Windows slashes
     const endFilepath = file.replaceAll('\\', '/')
     const fullFilepath = `${entryDir}/${endFilepath}`
     const { default: importedRoute } = await _import(fullFilepath)
