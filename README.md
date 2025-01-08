@@ -21,7 +21,9 @@ import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import autoloadRoutes from 'universal-autorouter'
 
-const app = await autoloadRoutes(new Hono(), {
+const app = new Hono()
+
+await autoloadRoutes(app, {
   // Pattern to scan route files
   pattern: '**/*.ts',
   // Prefix to add to routes
