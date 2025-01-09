@@ -96,17 +96,17 @@ export default async <T>(app: App<T>, {
   for (const file of sortRoutesByParams(files)) {
     const endFilepath = toPosix(file)
     const fullFilepath = `${entryDir}/${endFilepath}`
-    const { default: importedRoute } = await _import(fullFilepath)
+    const { default: handler } = await _import(fullFilepath)
 
-    if (!importedRoute && !skipImportErrors) {
+    if (!handler && !skipImportErrors) {
       throw new Error(`${fullFilepath} doesn't have default export (you can disable this error with 'skipImportErrors' option to true)`)
     }
 
-    if (typeof importedRoute === 'function') {
+    if (typeof handler === 'function') {
       const matchedFile = endFilepath.match(/\/?\((.*?)\)/)
       const method = matchedFile ? matchedFile[1] as Method : defaultMethod
       const route = `${prefix}/${transformToRoute(endFilepath)}`
-      app[method](route, importedRoute)
+      app[method](route, handler)
     } else {
       console.warn(`Exported function of ${fullFilepath} is not a function`)
     }
