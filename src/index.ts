@@ -1,8 +1,8 @@
 import fs from 'node:fs'
 import path from 'node:path'
-
-import { sortRoutesByParams, transformToRoute } from './utils'
 import { pathToFileURL } from 'node:url'
+
+import { sortRoutesByParams, toPosix, transformToRoute } from './utils'
 
 const DEFAULT_PATTERN = '**/*.{ts,tsx,mjs,js,jsx,cjs}'
 const DEFAULT_ROUTES_DIR = './routes'
@@ -71,7 +71,7 @@ export default async <T>(app: App<T>, {
   skipNoRoutes = false,
   skipImportErrors = false
 }: AutoloadRoutesOptions): Promise<App<T>> => {
-  const entryDir = path.isAbsolute(routesDir) ? routesDir : path.posix.join(process.cwd(), routesDir)
+  const entryDir = path.isAbsolute(routesDir) ? toPosix(routesDir) : path.posix.join(process.cwd(), routesDir)
   if (!fs.existsSync(entryDir)) {
     throw new Error(`Directory ${entryDir} doesn't exist`)
   }
@@ -94,8 +94,7 @@ export default async <T>(app: App<T>, {
     : (filepath: string) => import(pathToFileURL(filepath).href)
 
   for (const file of sortRoutesByParams(files)) {
-    // Fix Windows slashes
-    const endFilepath = file.replaceAll('\\', '/')
+    const endFilepath = toPosix(file)
     const fullFilepath = `${entryDir}/${endFilepath}`
     const { default: importedRoute } = await _import(fullFilepath)
 

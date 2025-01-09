@@ -2,6 +2,10 @@ const countParams = (filepath: string): number => {
   return (filepath.match(/\[(.*?)\]/gu) || []).length
 }
 
+export const toPosix = (filepath: string): string => {
+  return filepath.replaceAll('\\', '/')
+}
+
 /**
  * Sorts routes by the number of parameters in ascending order.
  * ['/user/[id]', '/user/name'] → ['/user/name', '/user/[id]']
