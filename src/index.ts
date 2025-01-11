@@ -16,7 +16,7 @@ type ViteDevServer = {
   ssrLoadModule: (url: string, opts?: { fixStacktrace?: boolean }) => Promise<Record<string, any>>
 }
 
-type AutoloadRoutesOptions = {
+export type AutoloadRoutesOptions = {
   /**
    * Pattern to search files of routes
    * @example pattern only .ts files
