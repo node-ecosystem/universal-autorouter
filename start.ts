@@ -4,7 +4,9 @@ import { logger } from 'hono/logger'
 
 import autoloadRoutes from './src/index'
 
-const app = await autoloadRoutes(new Hono(), {
+const app = new Hono()
+
+await autoloadRoutes(app, {
   pattern: '**/*.ts',
   // prefix: '/api',
   routesDir: 'test/routes'
