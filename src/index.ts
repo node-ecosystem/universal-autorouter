@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 
-import { sortRoutesByParams, toPosix, transformToRoute } from './utils'
+import { sortRoutesByParams, toPosix, filepathToRoute } from './utils'
 
 const DEFAULT_PATTERN = '**/*.{ts,tsx,mjs,js,jsx,cjs}'
 const DEFAULT_ROUTES_DIR = './routes'
@@ -105,7 +105,7 @@ export default async <T>(app: App<T>, {
     if (typeof handler === 'function') {
       const matchedFile = endFilepath.match(/\/?\((.*?)\)/)
       const method = matchedFile ? matchedFile[1] as Method : defaultMethod
-      const route = `${prefix}/${transformToRoute(endFilepath)}`
+      const route = `${prefix}/${filepathToRoute(endFilepath)}`
       app[method as Method](route, handler)
     } else {
       console.warn(`Exported function of ${fullFilepath} is not a function`)

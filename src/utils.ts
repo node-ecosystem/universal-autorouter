@@ -14,7 +14,7 @@ export const sortRoutesByParams = (routes: string[]): string[] => {
   return routes.sort((a, b) => countParams(a) - countParams(b))
 }
 
-export const transformToRoute = (filepath: string): string => {
+export const filepathToRoute = (filepath: string): string => {
   return filepath
     // Clean the url extensions
     .replace(/\.(ts|tsx|mjs|js|jsx|cjs)$/u, '')

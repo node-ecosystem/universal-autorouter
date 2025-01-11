@@ -2,38 +2,38 @@
 import { describe, test } from 'node:test'
 import { deepStrictEqual, strictEqual } from 'assert'
 
-import { sortRoutesByParams, transformToRoute } from '../src/utils'
+import { sortRoutesByParams, filepathToRoute } from '../src/utils'
 
 describe('Path to URL', () => {
   test('/index.ts → ', () => {
-    strictEqual(transformToRoute('/index.ts'), '')
+    strictEqual(filepathToRoute('/index.ts'), '')
   })
   test('/posts/index.ts → /posts', () => {
-    strictEqual(transformToRoute(('/posts/index.ts')), '/posts')
+    strictEqual(filepathToRoute(('/posts/index.ts')), '/posts')
   })
   test('/posts/[id].ts → /posts/:id', () => {
-    strictEqual(transformToRoute('/posts/[id].ts'), '/posts/:id')
+    strictEqual(filepathToRoute('/posts/[id].ts'), '/posts/:id')
   })
   test('/users.ts → /users', () => {
-    strictEqual(transformToRoute('/users.ts'), '/users')
+    strictEqual(filepathToRoute('/users.ts'), '/users')
   })
   test('/likes/[...].ts → /likes/*', () => {
-    strictEqual(transformToRoute('/likes/[...].ts'), '/likes/*')
+    strictEqual(filepathToRoute('/likes/[...].ts'), '/likes/*')
   })
   test('/domains/@[...]/index.ts → /domains/@*', () => {
-    strictEqual(transformToRoute('/domains/@[...]/index.ts'), '/domains/@*')
+    strictEqual(filepathToRoute('/domains/@[...]/index.ts'), '/domains/@*')
   })
   test('/frontend/index.tsx → /frontend', () => {
-    strictEqual(transformToRoute('/frontend/index.tsx'), '/frontend')
+    strictEqual(filepathToRoute('/frontend/index.tsx'), '/frontend')
   })
   test('/events/(post).ts → /events', () => {
-    strictEqual(transformToRoute('/events/(post).ts'), '/events')
+    strictEqual(filepathToRoute('/events/(post).ts'), '/events')
   })
   test('/(post)/events.ts → /events', () => {
-    strictEqual(transformToRoute('/(post)/events.ts'), '/events')
+    strictEqual(filepathToRoute('/(post)/events.ts'), '/events')
   })
   test('(post).ts → ', () => {
-    strictEqual(transformToRoute('(post).ts'), '')
+    strictEqual(filepathToRoute('(post).ts'), '')
   })
 })
 
