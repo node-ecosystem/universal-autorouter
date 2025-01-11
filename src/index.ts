@@ -106,7 +106,7 @@ export default async <T>(app: App<T>, {
       const matchedFile = endFilepath.match(/\/?\((.*?)\)/)
       const method = matchedFile ? matchedFile[1] as Method : defaultMethod
       const route = `${prefix}/${transformToRoute(endFilepath)}`
-      app[method](route, handler)
+      app[method as Method](route, handler)
     } else {
       console.warn(`Exported function of ${fullFilepath} is not a function`)
     }
