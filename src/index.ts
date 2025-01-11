@@ -62,6 +62,8 @@ export type AutoloadRoutesOptions = {
   skipImportErrors?: boolean
 }
 
+export { filepathToRoute } from './utils'
+
 export default async <T>(app: App<T>, {
   pattern = DEFAULT_PATTERN,
   prefix = '',
