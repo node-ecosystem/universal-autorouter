@@ -24,6 +24,14 @@
     "prepublishOnly": "yarn build",
     "od": "yarn outdated"
   },
+  "peerDependencies": {
+    "vite": "*"
+  },
+  "peerDependenciesMeta": {
+    "vite": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@hono/node-server": "^1.13.7",
     "@types/bun": "^1.1.16",

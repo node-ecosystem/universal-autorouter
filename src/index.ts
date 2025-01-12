@@ -12,13 +12,6 @@ type Method = 'get' | 'post' | 'put' | 'delete' | 'options' | 'patch' | 'all'
 
 type App<T> = Record<Method | string, ((route: string, handler: (req: unknown, res: unknown) => void) => void) | any> & T
 
-type ViteDevServer = {
-  watcher: {
-    on: (event: 'change', listener: (path: string, stats?: fs.Stats) => void) => ViteDevServer
-  }
-  ssrLoadModule: (url: string, opts?: { fixStacktrace?: boolean }) => Promise<Record<string, any>>
-}
-
 export type AutoloadRoutesOptions = {
   /**
    * Pattern to search files of routes
@@ -52,7 +45,7 @@ export type AutoloadRoutesOptions = {
    * Vite dev server instance
    * @default undefined
    */
-  viteDevServer?: ViteDevServer
+  viteDevServer?: import('vite').ViteDevServer
   /**
    * Skip the throw error when no routes are found
    * @default false
