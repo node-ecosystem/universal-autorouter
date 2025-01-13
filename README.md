@@ -92,7 +92,7 @@ Guide on how `universal-autorouter` matches routes:
 | ----------------- | --------------- | ------------------------------ | -------------------------------------------------------------------------------- |
 | pattern?          | string          | `**/*.{ts,tsx,js,jsx,mjs,cjs}` | [Glob patterns](https://en.wikipedia.org/wiki/Glob_(programming))                |
 | prefix?           | string          | ` `                            | Prefix to be added to each route                                                 |
-| routesDir?        | string          | `./routes`                     | The folder where routes are located (use a *relative* path)                      |
+| routesDir?        | string          | `./api`                        | The folder where routes are located (use a *relative* path)                      |
 | defaultMethod?    | Method | string | `get`                          | Default method to use when the route filename doesn't use the (<METHOD>) pattern |
 | viteDevServer?    | ViteDevServer   | _undefined_                    | Developer server instance of [Vite](https://vite.dev) to use SSR module loader   |
 | skipNoRoutes?     | boolean         | `false`                        | Skip the throw error when no routes are found                                    |

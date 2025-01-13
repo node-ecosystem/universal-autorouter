@@ -6,7 +6,7 @@ import type { ViteDevServer } from 'vite'
 import { sortRoutesByParams, toPosix, filepathToRoute } from './utils'
 
 const DEFAULT_PATTERN = '**/*.{ts,tsx,mjs,js,jsx,cjs}'
-export const DEFAULT_ROUTES_DIR = './routes'
+export const DEFAULT_ROUTES_DIR = './api'
 export const DEFAULT_METHOD = 'get'
 
 type Method = 'get' | 'post' | 'put' | 'delete' | 'options' | 'patch' | 'all'
