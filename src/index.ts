@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
+import type { ViteDevServer } from 'vite'
 
 import { sortRoutesByParams, toPosix, filepathToRoute } from './utils'
 
@@ -45,7 +46,7 @@ export type AutoloadRoutesOptions = {
    * Vite dev server instance
    * @default undefined
    */
-  viteDevServer?: import('vite').ViteDevServer
+  viteDevServer?: ViteDevServer
   /**
    * Skip the throw error when no routes are found
    * @default false
