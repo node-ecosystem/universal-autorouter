@@ -1,6 +1,5 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { pathToFileURL } from 'node:url'
 import type { ViteDevServer } from 'vite'
 
 import { sortRoutesByParams, toPosix, filepathToRoute } from './utils'
@@ -87,10 +86,16 @@ export default async <T>(app: App<T>, {
     throw new Error(`No matches found in ${entryDir} (you can disable this error with 'skipFailGlob' option to true)`)
   }
 
-  const _import = viteDevServer
-    ? (filepath: string) => viteDevServer.ssrLoadModule(filepath, { fixStacktrace: true })
+  let _import
+  if (viteDevServer) {
+    _import = (filepath: string) => viteDevServer.ssrLoadModule(filepath, { fixStacktrace: true })
+  } else if (process.platform === 'win32') {
     // fix ERR_UNSUPPORTED_ESM_URL_SCHEME import error on Windows
-    : (filepath: string) => import(pathToFileURL(filepath).href)
+    const { pathToFileURL } = await import('node:url')
+    _import = (filepath: string) => import(pathToFileURL(filepath).href)
+  } else {
+    _import = (filepath: string) => import(filepath)
+  }
 
   for (const file of sortRoutesByParams(files)) {
     const endFilepath = toPosix(file)
