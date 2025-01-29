@@ -1,5 +1,4 @@
 import fs from 'node:fs'
-import path from 'node:path'
 import type { ViteDevServer } from 'vite'
 
 import { sortRoutesByParams, toPosix, filepathToRoute } from './utils'
@@ -69,7 +68,7 @@ export default async <T>(app: App<T>, {
   skipNoRoutes = false,
   skipImportErrors = false
 }: AutoloadRoutesOptions): Promise<App<T>> => {
-  const entryDir = path.isAbsolute(routesDir) ? toPosix(routesDir) : path.posix.join(process.cwd(), routesDir)
+  const entryDir = toPosix(routesDir)
   if (!fs.existsSync(entryDir)) {
     throw new Error(`Directory ${entryDir} doesn't exist`)
   }
