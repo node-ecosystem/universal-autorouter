@@ -33,7 +33,7 @@ export type AutoloadRoutesOptions = {
   prefix?: string
   /**
    * Directory to search routes
-   * @default '/routes'
+   * @default '/api'
    */
   routesDir?: string
   /**
