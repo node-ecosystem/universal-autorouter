@@ -1,6 +1,6 @@
 {
   "name": "universal-autorouter",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "license": "MIT",
   "type": "module",
   "module": "./dist/index.mjs",
